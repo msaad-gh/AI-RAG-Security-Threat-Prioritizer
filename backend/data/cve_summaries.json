@@ -1,0 +1,79 @@
+[
+  {
+    "cve_id": "CVE-2023-38606",
+    "description": "A kernel memory corruption issue in Apple platforms was addressed with improved state handling. A malicious application may be able to execute arbitrary code with kernel privileges. The flaw was actively exploited in the wild as part of the Operation Triangulation spyware chain targeting iOS devices.",
+    "affected_software": "Apple iOS < 16.6, iPadOS < 16.6, macOS Ventura < 13.5",
+    "cvss_score": 7.5,
+    "remediation": "Update to iOS/iPadOS 16.6 or macOS Ventura 13.5 or later. Review enrolled devices for unexpected MDM profiles, sideloaded enterprise apps, and unexplained network traffic to unknown domains."
+  },
+  {
+    "cve_id": "CVE-2023-22515",
+    "description": "A broken access control vulnerability in Atlassian Confluence Data Center and Server allows an unauthenticated attacker to create an unauthorized Confluence administrator account and gain full administrative access to the instance. Exploited in the wild shortly after disclosure.",
+    "affected_software": "Atlassian Confluence Data Center and Server 8.0.0 - 8.5.1",
+    "cvss_score": 9.8,
+    "remediation": "Upgrade to Confluence 8.5.2 or later (or apply the vendor hotfix). Immediately audit for unexpected administrator accounts, rotate all Confluence credentials and secrets, and review access logs for post-exploitation activity."
+  },
+  {
+    "cve_id": "CVE-2024-21413",
+    "description": "A security feature bypass in Microsoft Outlook allows an attacker to leak NTLM credentials by sending a specially crafted email containing a malicious moniker link to a remote file share. Previewing the email is sufficient; the flaw can enable further relay and remote code execution chains.",
+    "affected_software": "Microsoft Outlook 2016/2019/LTSC 2021 and Microsoft 365 Apps for Enterprise (unpatched builds before February 2024)",
+    "cvss_score": 9.8,
+    "remediation": "Apply the February 2024 Microsoft security updates. Block file:// UNC links in email, enforce Protected View, and consider disabling or tightly restricting NTLM authentication in the environment."
+  },
+  {
+    "cve_id": "CVE-2021-44228",
+    "description": "Log4Shell is a remote code execution vulnerability in Apache Log4j 2 caused by improper handling of JNDI lookups in logged strings. An attacker who controls log messages can trigger loading of remote code, leading to full server compromise. Massively exploited across enterprise Java applications.",
+    "affected_software": "Apache Log4j 2.0-beta9 through 2.14.1 (2.15.0 partially mitigated)",
+    "cvss_score": 10.0,
+    "remediation": "Upgrade Log4j to 2.17.1 or later. As an interim measure remove the JndiLookup class from the classpath or set log4j2.formatMsgNoLookups=true. Inventory all Java applications and scan for vulnerable bundled versions."
+  },
+  {
+    "cve_id": "CVE-2020-1472",
+    "description": "Zerologon is a critical elevation of privilege vulnerability in the Netlogon Remote Protocol that allows an attacker to impersonate any machine account on a domain controller, including the DC itself, by abusing an AES-CBC8 cryptographic flaw. Enables full domain compromise without credentials.",
+    "affected_software": "All Windows Server domain controllers without the August 2020 security update",
+    "cvss_score": 10.0,
+    "remediation": "Apply the August 2020 or later Windows Server updates and enforce secure RPC on Netlogon. Reset machine account passwords of all domain controllers and audit event logs for Netlogon exploitation traces (event 5805)."
+  },
+  {
+    "cve_id": "CVE-2023-34362",
+    "description": "A SQL injection vulnerability in Progress MOVEit Transfer allows an unauthenticated attacker to gain access to the MOVEit database, insert records, and ultimately execute code. Exploited at scale by the Cl0p ransomware group to steal data from thousands of organizations.",
+    "affected_software": "Progress MOVEit Transfer all versions before 2021.0.6 / 2021.1.4 / 2022.0.4 / 2022.1.5 / 2023.0.1",
+    "cvss_score": 9.8,
+    "remediation": "Apply the vendor security patches immediately. Hunt for the human2.aspx webshell, unauthorized user accounts, and unexpected file drops in wwwroot. Rotate all MOVEit service and database credentials and notify affected data owners."
+  },
+  {
+    "cve_id": "CVE-2023-4966",
+    "description": "Citrix Bleed is a sensitive information disclosure vulnerability in Citrix NetScaler ADC and Gateway that leaks session tokens from memory. Attackers use stolen tokens to hijack authenticated sessions and bypass multi-factor authentication entirely. Actively exploited for ransomware entry.",
+    "affected_software": "Citrix NetScaler ADC and Gateway 13.1 before 13.1-49.13, 13.0 before 13.0-92.19, 14.1 before 14.1-25.53",
+    "cvss_score": 9.4,
+    "remediation": "Upgrade to a fixed NetScaler firmware release. After patching, terminate all active and persistent sessions to invalidate stolen tokens. Inspect for unauthorized accounts and review AAA session logs for token reuse from anomalous IPs."
+  },
+  {
+    "cve_id": "CVE-2024-3400",
+    "description": "An unauthenticated command injection vulnerability in the GlobalProtect feature of Palo Alto Networks PAN-OS allows remote code execution as root on the firewall. Exploited in the wild as a zero-day against perimeter devices.",
+    "affected_software": "Palo Alto Networks PAN-OS 10.2 before 10.2.9-h1, 11.0 before 11.0.4-h1, 11.1 before 11.1.2-h3 (GlobalProtect enabled)",
+    "cvss_score": 10.0,
+    "remediation": "Apply the vendor hotfix. If patching is delayed, temporarily disable device telemetry per vendor guidance. Review for exploitation indicators (unexpected files in /var/appweb, suspicious PersistencePolicies entries), rotate device credentials, and reissue certificates."
+  },
+  {
+    "cve_id": "CVE-2024-1709",
+    "description": "An authentication bypass in ScreenConnect (formerly ConnectWise Control) allows an attacker to reach the setup wizard endpoint and create a new administrative account without authentication, resulting in full remote control over affected instances. Exploited broadly for ransomware deployment.",
+    "affected_software": "ScreenConnect 23.9.7 and all prior versions",
+    "cvss_score": 10.0,
+    "remediation": "Upgrade to ScreenConnect 23.9.8 or later. Delete any unexpected extensions or administrator accounts, audit session recordings for unauthorized access, and rotate all ScreenConnect credentials."
+  },
+  {
+    "cve_id": "CVE-2022-22965",
+    "description": "Spring4Shell is a remote code execution vulnerability in the Spring Framework data binding functionality that can be exploited when applications run on JDK 9 or newer and are deployed as WARs on Tomcat. Allows unauthenticated attackers to manipulate class loader properties and write webshells.",
+    "affected_software": "Spring Framework 5.3.0 - 5.3.17 and 5.2.0 - 5.2.19 on JDK 9+ with Tomcat WAR deployment",
+    "cvss_score": 9.8,
+    "remediation": "Upgrade Spring Framework to 5.3.18 or 5.2.20 or later. Downgrade to JDK 8 or deploy as an embedded JAR as a temporary mitigation. Apply WAF rules for malicious classloader module parameters and inspect for dropped JSP webshells."
+  },
+  {
+    "cve_id": "CVE-2023-27997",
+    "description": "A heap-based buffer overflow in Fortinet FortiOS SSL-VPN allows a remote unauthenticated attacker to execute arbitrary code on the appliance via crafted requests. Exploited as a zero-day against perimeter VPN gateways to gain network footholds.",
+    "affected_software": "Fortinet FortiOS 6.2.x, 6.4.x before 6.4.13, 7.0.x before 7.0.12, 7.2.x before 7.2.5 (SSL-VPN enabled)",
+    "cvss_score": 9.8,
+    "remediation": "Upgrade FortiOS to a fixed release. If SSL-VPN is not required, disable it. Check device logs for anomalous SSL-VPN sessions, unexpected admin accounts, and modified configuration, and rotate all VPN and admin credentials."
+  }
+]

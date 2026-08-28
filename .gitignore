@@ -1,0 +1,12 @@
+.env
+.env.local
+*.pkl
+data/chroma_db/
+backend/data/chroma_db/
+__pycache__/
+*.pyc
+node_modules/
+.next/
+venv/
+*.db
+.DS_Store

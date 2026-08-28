@@ -1,0 +1,146 @@
+[
+  {
+    "technique_id": "T1110.001",
+    "name": "Password Guessing",
+    "tactic": "Credential Access",
+    "description": "Adversaries with no prior knowledge of valid credentials may guess them through brute force or password spraying against authentication services such as SSH, RDP, web portals, and database logins. High-volume guessing produces distinctive failure patterns, either many attempts against one account or one password tried against many accounts.",
+    "mitigations": [
+      "Enforce account lockout and exponential backoff after repeated failures",
+      "Deploy multi-factor authentication on all remote access points",
+      "Alert on authentication failure spikes grouped by source IP, account, and target",
+      "Apply rate limiting and CAPTCHA on internet-facing login forms"
+    ]
+  },
+  {
+    "technique_id": "T1046",
+    "name": "Network Service Discovery",
+    "tactic": "Discovery",
+    "description": "Adversaries scan networks to discover open ports, running services, and live hosts, typically as reconnaissance before exploitation. Scanning may be performed with tools such as nmap and masscan or with native network utilities, and often precedes targeted exploitation of a discovered service.",
+    "mitigations": [
+      "Segment the network and restrict cross-zone scanning paths",
+      "Tune IDS/IPS signatures for SYN sweeps and scanning patterns",
+      "Disable or firewall unnecessary services and ports",
+      "Baseline host-to-host traffic and alert on new connection patterns"
+    ]
+  },
+  {
+    "technique_id": "T1041",
+    "name": "Exfiltration Over C2 Channel",
+    "tactic": "Exfiltration",
+    "description": "Adversaries exfiltrate data over an existing command-and-control channel instead of opening a separate connection, blending theft with routine C2 traffic to evade detection. Large or sustained outbound transfers to previously unseen destinations are a key indicator.",
+    "mitigations": [
+      "Deploy DLP controls on egress points",
+      "Baseline outbound volume per host and alert on significant deviation",
+      "Restrict outbound traffic to approved destinations and ports via proxy",
+      "Inspect TLS traffic where feasible to identify tunneling anomalies"
+    ]
+  },
+  {
+    "technique_id": "T1059.001",
+    "name": "PowerShell",
+    "tactic": "Execution",
+    "description": "Adversaries abuse PowerShell to execute commands, download payloads, and run encoded or obfuscated scripts (for example via the -enc flag). PowerShell is a common vector for fileless attacks and post-exploitation activity on Windows hosts, especially on servers where interactive logins are unexpected.",
+    "mitigations": [
+      "Enable PowerShell script block and transcript logging",
+      "Apply constrained language mode and application control policies",
+      "Alert on encoded-command and hidden-window flags on servers",
+      "Restrict interactive PowerShell access for service and application accounts"
+    ]
+  },
+  {
+    "technique_id": "T1078",
+    "name": "Valid Accounts",
+    "tactic": "Defense Evasion, Persistence, Privilege Escalation, Initial Access",
+    "description": "Adversaries use compromised, default, or legitimately obtained credentials such as admin, service, and backup accounts to appear as authorized users, bypassing access controls and defeating credential-based defenses. Logins from unfamiliar sources or at unusual times for otherwise valid accounts are primary indicators.",
+    "mitigations": [
+      "Deploy multi-factor authentication for all privileged and remote access",
+      "Monitor for anomalous account usage: new source IPs, odd hours, impossible travel",
+      "Rotate and inventory service, backup, and default account credentials",
+      "Disable dormant accounts and enforce least-privilege role design"
+    ]
+  },
+  {
+    "technique_id": "T1136",
+    "name": "Create Account",
+    "tactic": "Persistence",
+    "description": "Adversaries create new local or domain accounts to maintain access after password resets or account cleanup. Accounts may be hidden using registry tricks or naming that mimics legitimate service accounts, and are often added directly to privileged groups.",
+    "mitigations": [
+      "Alert on account creation events, especially outside business hours",
+      "Audit for hidden accounts (registry SpecialAccounts) and unexpected group additions",
+      "Restrict who can create local accounts on servers",
+      "Run periodic account attestation reviews against HR records"
+    ]
+  },
+  {
+    "technique_id": "T1071.001",
+    "name": "Web Protocols",
+    "tactic": "Command and Control",
+    "description": "Adversaries use common web protocols such as HTTP and HTTPS for command-and-control traffic to blend in with normal browsing and API activity. Techniques include domain fronting, fast-flux domains, and beaconing on regular intervals to attacker-controlled endpoints.",
+    "mitigations": [
+      "Force web egress through inspecting proxies with allow-lists",
+      "Monitor DNS logs for newly registered and low-reputation domains",
+      "Detect periodic beaconing patterns in outbound traffic",
+      "Block direct-to-internet server traffic where architecturally possible"
+    ]
+  },
+  {
+    "technique_id": "T1003",
+    "name": "OS Credential Dumping",
+    "tactic": "Credential Access",
+    "description": "Adversaries extract credentials from the operating system and software, including LSASS process memory, the SAM/SYSTEM/SECURITY registry hives, the NTDS.dit domain database, Kerberos tickets, and passwords stored in browsers. Credential dumping frequently follows initial access and enables lateral movement.",
+    "mitigations": [
+      "Enable Credential Guard and LSASS protection (RunAsPPL)",
+      "Deploy EDR detections for common dumping tools and abnormal LSASS access",
+      "Use privileged access workstations and tiered administration",
+      "Harden service accounts with credential guard policies"
+    ]
+  },
+  {
+    "technique_id": "T1021.004",
+    "name": "Remote Services: SSH",
+    "tactic": "Lateral Movement",
+    "description": "Adversaries use SSH with stolen keys or credentials to move laterally between hosts, often via jump hosts, establishing encrypted sessions that resemble routine administration. Failed SSH attempts followed by a first-time successful login are a classic lateral movement signature.",
+    "mitigations": [
+      "Use bastion hosts with full session logging and recording",
+      "Restrict SSH source ranges and disable password authentication",
+      "Rotate and inventory authorized SSH keys",
+      "Alert on SSH brute-force patterns and new user-host pairs"
+    ]
+  },
+  {
+    "technique_id": "T1098",
+    "name": "Account Manipulation",
+    "tactic": "Persistence",
+    "description": "Adversaries modify existing accounts to maintain and elevate access, including adding accounts to privileged groups, registering new SSH keys, changing credentials, and configuring delegation or service principals. These changes survive password resets of the originally compromised account.",
+    "mitigations": [
+      "Alert on modifications to privileged group membership",
+      "Monitor directory service events for unusual attribute and key changes",
+      "Require change approval workflows for privileged group membership",
+      "Regularly audit delegation, SPN, and authorized key configurations"
+    ]
+  },
+  {
+    "technique_id": "T1573",
+    "name": "Encrypted Channel",
+    "tactic": "Command and Control",
+    "description": "Adversaries encrypt command-and-control traffic using symmetric or asymmetric cryptography and sometimes custom protocols to evade network inspection. Unexpected certificate changes, self-signed certificates on services, and unusual cipher or protocol usage often accompany encrypted C2 setup.",
+    "mitigations": [
+      "Inspect TLS at the proxy and validate certificate chains",
+      "Alert on unauthorized certificate replacement on servers",
+      "Block non-standard encrypted protocols on egress traffic",
+      "Detect unusual cipher suites and TLS fingerprints"
+    ]
+  },
+  {
+    "technique_id": "T1567.002",
+    "name": "Exfiltration to Cloud Storage",
+    "tactic": "Exfiltration",
+    "description": "Adversaries transfer stolen data to legitimate cloud storage services such as object storage, file-sync platforms, and personal cloud drives, abusing trusted services and valid tokens to bypass traditional egress controls. Uploads are often large, sustained, and from service accounts or endpoints that rarely use those services.",
+    "mitigations": [
+      "Apply DLP inspection to uploads toward cloud storage services",
+      "Restrict approved storage services and block personal cloud destinations",
+      "Monitor and scope cloud API tokens and access keys",
+      "Baseline host upload volumes and alert on large deviations"
+    ]
+  }
+]
